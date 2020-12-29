@@ -1,1 +1,1 @@
-/home/turchiad/Coding/2020/RustScrapbook/HelloCargo/target/debug/HelloCargo: /home/turchiad/Coding/2020/RustScrapbook/HelloCargo/src/main.rs
+/home/turchiad/Coding/2020/RustScrapbook/hello_cargo/target/debug/HelloCargo: /home/turchiad/Coding/2020/RustScrapbook/hello_cargo/src/main.rs
