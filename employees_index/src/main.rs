@@ -1,5 +1,6 @@
 use std::io;
 use std::collections::HashMap;
+use itertools::join;
 
 fn main() {
 
@@ -143,9 +144,29 @@ fn is_valid_input(d: i8, s: &String) -> bool {
 
 // This function handles additions to the database.
 fn handle_add(s: &String) {
-	if(is_valid_input(1, s))
+	if is_valid_input(1, s)
 	{
-		println!("Success");
+		//Divide input into words.
+		let mut words: Vec<&str> = s.split_whitespace().collect();
+		//Take "add" off
+		words.drain(0..1);
+		//Let x and y be helper indices
+	    let x = words.iter().position(|&x| x == "to").unwrap();
+	    //If "to" is the first element, handle this way
+	    let (name, department) = if x == 0 {
+	        let y = words[1..].iter().position(|&x| x == "to").unwrap();
+	        let name = join(&words[x..y+1]," ");
+	        let department = join(&words[y+2..]," ");
+	        (name, department)
+	    }
+	    // If "to" is later, handle this way
+	    else {
+	        let name = join(&words[..x]," ");
+	        let department = join(&words[x+1..]," ");
+	        (name, department)
+	    };
+
+	    println!("name: {}, department: {}",name,department);
 	}
 	else {
 		println!("Add attempt not formatted properly, please try again.");
