@@ -29,9 +29,9 @@ fn main() {
 		match input_decider(&input_lowercase) {
 			-1 => println!("Invalid input, please try again."),
 			0 => break,
-			1 => handle_add(&input_lowercase),
-			2 => handle_show(&input_lowercase),
-			3 => handle_showfull(&input_lowercase),
+			1 => handle_add(&mut database, &input_lowercase),
+			2 => handle_show(&mut database, &input_lowercase),
+			3 => handle_showfull(&mut database, &input_lowercase),
 			_ => println!("Unexpected error, please try again.")
 		}
 	}
@@ -47,6 +47,8 @@ fn main() {
 //		3	-> showfull
 fn input_decider(s: &String) -> i8
 {
+	//println!("{}_",s);
+
 	if s == "q" || s == "quit" {
 		0
 	}
@@ -135,6 +137,48 @@ fn is_valid_input(d: i8, s: &String) -> bool {
 
 			return keyword_1 && keyword_2 && final_check
 		},
+		2 => {
+			// This routine is redundant and can probably be omitted. The only way to
+			// reach this point is if show is formatted correctly.
+
+			// Split input
+			let mut words = s.split_whitespace();
+
+			// keyword_1 is detection of "show"
+			let keyword_1 = match words.next() {
+				Some(x) => x == "show",
+				None => false
+			};
+
+			// final_check is detection of a word after "show"
+			let final_check = match words.next() {
+				Some(_x) => true,
+				None => false
+			};
+
+			return keyword_1 && final_check
+		},
+		3 => {
+			// This routine is redundant and can probably be omitted. The only way to
+			// reach this point is if showall is formatted correctly.
+
+			// Split input
+			let mut words = s.split_whitespace();
+
+			// keyword_1 is detection of "show"
+			let keyword_1 = match words.next() {
+				Some(x) => x == "showall",
+				None => false
+			};
+
+			// final_check is detection of no word after "show"
+			let final_check = match words.next() {
+				Some(_x) => false,
+				None => true
+			};
+
+			return keyword_1 && final_check
+		},
 		_ => {
 			println!("Unexpected error, please try again.");
 			return false;
@@ -143,7 +187,7 @@ fn is_valid_input(d: i8, s: &String) -> bool {
 }
 
 // This function handles additions to the database.
-fn handle_add(s: &String) {
+fn handle_add(database: &mut HashMap<String, Vec<String>>, s: &String) {
 	if is_valid_input(1, s)
 	{
 		//Divide input into words.
@@ -166,7 +210,12 @@ fn handle_add(s: &String) {
 	        (name, department)
 	    };
 
-	    println!("name: {}, department: {}",name,department);
+	    // debug
+	    // println!("name: {}, department: {}",name,department);
+
+	    // Great ideas from helpful folks at the Rust Discord. Simple and elegant way to
+	    // push to HashMap of Vec
+	    database.entry(department).or_default().push(name);
 	}
 	else {
 		println!("Add attempt not formatted properly, please try again.");
@@ -174,11 +223,16 @@ fn handle_add(s: &String) {
 }
 
 // This function handles requests to view departments from the database.
-fn handle_show(s: &String) {
-	unimplemented!()
+fn handle_show(database: &mut HashMap::<String,Vec<String>>, s: &String) {
+	if is_valid_input(2, s){
+		println!("Success!");
+	}
+	else {
+		println!("Failure.");
+	}
 }
 
 // This function handles requests to view the full database
-fn handle_showfull(s: &String) {
+fn handle_showfull(database: &mut HashMap::<String,Vec<String>>, s: &String) {
 	unimplemented!()
 }
