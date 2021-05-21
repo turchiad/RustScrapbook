@@ -167,7 +167,7 @@ fn is_valid_input(d: i8, s: &String) -> bool {
 
 			// keyword_1 is detection of "show"
 			let keyword_1 = match words.next() {
-				Some(x) => x == "showall",
+				Some(x) => x == "showfull",
 				None => false
 			};
 
@@ -225,14 +225,63 @@ fn handle_add(database: &mut HashMap<String, Vec<String>>, s: &String) {
 // This function handles requests to view departments from the database.
 fn handle_show(database: &mut HashMap::<String,Vec<String>>, s: &String) {
 	if is_valid_input(2, s){
-		println!("Success!");
+		// Divide input into words.
+		let mut words: Vec<&str> = s.split_whitespace().collect();
+		// Take "add" off
+		words.drain(0..1);
+		// Combine the rest
+		let department = words.join(" ");
+		// Retrieve list of names
+		let mut list_of_names = match database.get(&department) {
+			Some(x) => x,
+			None => {
+				println!("Department not found, please try again.");
+				return
+			}
+		}.clone();
+
+		// Get in alphabetical order
+		list_of_names.sort();
+
+		println!("{}:",department);
+		for name in list_of_names {
+			println!("{}", name);
+		}
 	}
 	else {
-		println!("Failure.");
+		//Theoretically unreachable
+		println!("Show attempt not formatted properly, please try again.");
 	}
 }
 
 // This function handles requests to view the full database
 fn handle_showfull(database: &mut HashMap::<String,Vec<String>>, s: &String) {
-	unimplemented!()
+	if is_valid_input(3, s){
+
+		let mut keys: Vec<&String> = database.keys().collect();
+		keys.sort();
+
+		for department in keys {
+			// Retrieve list of names
+			let mut list_of_names = match database.get(department) {
+				Some(x) => x,
+				None => {
+					println!("Department not found, please try again.");
+					return
+				}
+			}.clone();
+
+			// Get in alphabetical order
+			list_of_names.sort();
+
+			println!("{}:",department);
+			for name in list_of_names {
+				println!("{}", name);
+			}
+		}
+	}
+	else {
+		//Theoretically unreachable
+		println!("Show attempt not formatted properly, please try again.");
+	}
 }
