@@ -9,20 +9,20 @@ fn main() {
     let config = match Config::new(&args) {
         Ok(x) => x,
         Err(x) => {
-            println!("Problem parsing arguments: {}", x);
+            eprintln!("Problem parsing arguments: {}", x);
             process::exit(1);
         }
     };
 
-    // Announce action
-    println!(
-        "Searching for {}\nIn file {}",
-        config.query, config.filename
-    );
+    // // Announce action
+    // println!(
+    //     "Searching for {}\nIn file {}",
+    //     config.query, config.filename
+    // );
 
     // Program logic
     if let Err(e) = minigrep::run(config) {
-        println!("Application error: {}", e);
+        eprintln!("Application error: {}", e);
 
         process::exit(1);
     }
