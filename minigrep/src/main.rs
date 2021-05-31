@@ -4,9 +4,7 @@ use std::process; //So the program may be terminated early
 use minigrep::Config;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let config = match Config::new(&args) {
+    let config = match Config::new(env::args()) {
         Ok(x) => x,
         Err(x) => {
             eprintln!("Problem parsing arguments: {}", x);
