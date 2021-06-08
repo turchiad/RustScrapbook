@@ -1,4 +1,0 @@
-var searchIndex = JSON.parse('{\
-"minigrep":{"doc":"","t":[3,12,12,12,11,5,5,5,11,11,11,11,11,11,11],"n":["Config","query","filename","case_sensitive","new","run","search","search_case_insensitive","from","into","borrow","borrow_mut","try_from","try_into","type_id"],"q":["minigrep","","","","","","","","","","","","","",""],"d":["","","","","","","","","","","","","","",""],"i":[0,1,1,1,1,0,0,0,1,1,1,1,1,1,1],"f":[null,null,null,null,[[["args",3]],[["config",3],["result",4],["str",15]]],[[["config",3]],[["result",4],["box",3]]],[[["str",15],["str",15]],[["str",15],["vec",3]]],[[["str",15],["str",15]],[["str",15],["vec",3]]],[[]],[[]],[[]],[[]],[[],["result",4]],[[],["result",4]],[[],["typeid",3]]],"p":[[3,"Config"]]}\
-}');
-initSearch(searchIndex);
